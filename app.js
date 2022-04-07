@@ -11,6 +11,8 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('combined'));
+app.use('/uploads', express.static('uploads'));
+
 
 app.use(express.json());
 

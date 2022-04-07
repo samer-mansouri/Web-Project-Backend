@@ -7,8 +7,13 @@ const {
     handleRefreshToken,
     getUser,
     getUsers,
-    updateUserInformations
+    updateUserInformations,
+    UpdateUserProfilePicture
 } = require('../controllers/UserController');
+const {
+    uploadProfilePicture
+  } = require("../config/upload");
+  
 const isAuthenticated = require('../middlewares/isAuthenticated');
 
 
@@ -19,6 +24,7 @@ router.post('/refresh', handleRefreshToken)
 router.get('/user/:id', getUser);
 router.get('/users', getUsers);
 router.put('/updateuser', isAuthenticated, updateUserInformations);
+router.post('/uploadprofilepicture', isAuthenticated,     uploadProfilePicture.single('picture'),UpdateUserProfilePicture);
 router.get('/test', isAuthenticated, (req, res) => {
     res.send({"Message": "Authenticated and able to see this"})
 })

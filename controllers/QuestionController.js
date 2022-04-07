@@ -42,16 +42,30 @@ const getUserQuestions = (req, res) => {
 }
 
 const createQuestion = (req, res) => {
+    console.log(req.files);
     const userId = req.user
-    console.log("Here is the userId: " + userId)
-    const newQuestion = new Question({ userId: userId, ...req.body});
-    console.log("Here")
-    newQuestion.save((err, question) => {
-        if (err) {
-            res.status(500).send(err);
-        }
-        res.status(201).json(question);
-    });
+    if(req.files.photos){
+        const images = [];
+        req.files.photos.forEach(file => {
+            images.push(file.path);
+        });
+        const newQuestion = new Question({ userId: userId, pictures: images,...req.body});
+        newQuestion.save((err, question) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+            res.status(201).json(question);
+        });
+    } else {
+        const newQuestion = new Question({ userId: userId, ...req.body});
+        newQuestion.save((err, question) => {
+            if (err) {
+                res.status(500).send(err);
+            }
+            res.status(201).json(question);
+        });
+    }
+    
 }
 
 const updateQuestion = (req, res) => {

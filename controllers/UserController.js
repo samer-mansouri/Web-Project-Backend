@@ -3,6 +3,11 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const {
+  upload,
+  fileFilter,
+  storage,
+} = require("../config/upload");
 
 
 const { validateUser, initializeUser } = require('../helpers/UserHelpers')
@@ -174,6 +179,18 @@ const updateUserInformations = (req, res) => {
 }
 
 
+const UpdateUserProfilePicture  = (req, res) => {
+
+    User.findOneAndUpdate({_id: req.user}, {picture: req.file.path}, (err, doc) => {
+        if(!err){
+            res.status(201).send(doc);
+        } else {
+            console.log('Error in User Update :' + JSON.stringify(err, undefined, 2));
+            res.status(400).send({"Error": "Internal Server Error"})
+        }
+    });
+}
+
   
 module.exports = {
   createUser,
@@ -183,4 +200,5 @@ module.exports = {
   getUser,
   getUsers,
   updateUserInformations,
+  UpdateUserProfilePicture,
 };

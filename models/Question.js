@@ -19,9 +19,7 @@ const QuestionSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    pictures: [
-        {pictureUrl:String},
-    ],
+    pictures: [],
 })
 
 QuestionSchema.set('toJSON', { virtuals: true })
