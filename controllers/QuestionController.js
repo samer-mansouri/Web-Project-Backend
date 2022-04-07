@@ -14,6 +14,31 @@ const getAllQuestions = (req, res) => {
     });
 };
 
+const getAllQuestionsWithPagination = (req, res) => {
+    var options = {
+        sort : { createdAt: -1 },
+        page : req.query.page || 1,
+        limit : 10,
+        lean : true,
+        populate : [
+                {
+                    path: "user",
+                    select: "firstName lastName picture",
+                    model: "User"
+                },
+                {
+                    path: "commentsNumber",
+                }
+        ],
+    }
+    Question.paginate({}, options, (err, questions) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        res.status(200).json(questions);
+    });
+}
+
 const getSingleQuestion = (req, res) => {
     Question.findById(req.params.question_id)
     .populate("user", "firstName lastName picture")
@@ -92,5 +117,6 @@ module.exports = {
     getUserQuestions,
     createQuestion,
     updateQuestion,
-    deleteQuestion
+    deleteQuestion,
+    getAllQuestionsWithPagination
 }

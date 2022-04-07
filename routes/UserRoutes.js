@@ -8,7 +8,7 @@ const {
     getUser,
     getUsers,
     updateUserInformations,
-    UpdateUserProfilePicture
+    UpdateUserProfilePicture,
 } = require('../controllers/UserController');
 const {
     uploadProfilePicture

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 var timestamps = require('mongoose-timestamp');
 
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const QuestionSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectID,
@@ -44,5 +46,7 @@ QuestionSchema.virtual('commentsNumber', {
 });
   
 
+
 QuestionSchema.plugin(timestamps);
+QuestionSchema.plugin(mongoosePaginate);
 mongoose.model("Question", QuestionSchema)

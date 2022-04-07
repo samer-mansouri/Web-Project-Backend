@@ -6,12 +6,14 @@ const {
     getSingleQuestion,
     getUserQuestions,
     updateQuestion,
+    getAllQuestionsWithPagination,
 } = require('../controllers/QuestionController');
 const {
     uploadQuestionPictures
 } = require("../config/upload");
 const isAuthenticated = require('../middlewares/isAuthenticated');
 
+router.get('/all', getAllQuestionsWithPagination);
 router.get('/questions', isAuthenticated, getAllQuestions);
 router.get('/question/:question_id', isAuthenticated, getSingleQuestion);
 router.get('/question/:user_id/questions', isAuthenticated, getUserQuestions);

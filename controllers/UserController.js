@@ -86,7 +86,6 @@ const handleLogin = async (req, res) => {
   if (!email || !password) return res.status(400).json({ 'message': 'Email and password are required.' });
 
   const foundUser = await User.findOne({ email: email }).exec();
-  console.log(foundUser)
   if (!foundUser) return res.sendStatus(401).send({"Error": "User not found"}); //Unauthorized 
   // evaluate password 
   else {
